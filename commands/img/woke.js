@@ -74,7 +74,7 @@ module.exports = {
                             })
                             .then(function (data) {
 
-                                    eyelocate.execute('{"url": ' + '"' + link + '"}', async (res) =>{
+                                    eyelocate.execute('{"url": ' + '"' + link + '"}', async (res) => {
 
                                     if(res==null) return message.channel.send("Could not locate parts of the image! Try using another one.");
 
@@ -95,13 +95,13 @@ module.exports = {
                                         .composite([
                                             {
                                                 input: leftEye,
-                                                blend: 'over',
+                                                blend: "over",
                                                 top: parseInt(left.y / 2),
                                                 left: parseInt(left.x / 2)
                                             },
                                             {
                                                 input: rightEye,
-                                                blend: 'over',
+                                                blend: "over",
                                                 top: parseInt(right.y / 2),
                                                 left: parseInt(right.x - ((data - right.x) / 2)),
                                             },
@@ -112,11 +112,11 @@ module.exports = {
                                     var result = intoStream(data1).pipe(overlay);
     
     
-                                    result.once('finish', function () {
+                                    result.once("finish", function () {
                                         message.channel.send("", {
                                             files: [{
                                                 attachment: result,
-                                                name: 'woke.png'
+                                                name: "woke.png"
                                             }]
                                         });
                                     });

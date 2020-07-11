@@ -20,7 +20,7 @@ module.exports = {
                 message.channel.send("Your message is too long.");
             }
             else{
-                message.channel.send('```'+data+'```');
+                message.channel.send("```"+data+"```");
             }
         });
     }

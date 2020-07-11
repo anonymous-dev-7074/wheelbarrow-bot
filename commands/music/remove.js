@@ -10,7 +10,7 @@ module.exports = {
 
 
         if (args.length > 1 || isNaN(parseInt(args[0]))) {
-            message.channel.send("Correct usage is: --remove <position in  the queue> !")
+            message.channel.send("Correct usage is: --remove <position in  the queue> !");
         }
         else {
             if(!server || !server.player){
@@ -18,9 +18,9 @@ module.exports = {
             }
             else{
                 if (parseInt(args[0]) > server.queue.length || parseInt(args[0]) < 1) {
-                    message.channel.send("Number is out of range!")
+                    message.channel.send("Number is out of range!");
                 }
-                else if(parseInt(args[0])==1){
+                else if(parseInt(args[0]) === 1){
                     message.channel.send("Cannot remove song that is playing right now! Use **--skip**!");
                 }
                 else {

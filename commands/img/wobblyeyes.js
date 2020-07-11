@@ -14,24 +14,6 @@ module.exports = {
     note: "If no argument is provided senders profile picture will be used.",
     async execute(client, message, args){
 
-        if (args.length > 1) {
-            return message.channel.send("Too many parameters! Use --help wobblyeyes for usage instructions!");
-        }
-        else {
-            if (message.attachments.size == 1) {
-                makeWobble(message.attachments.first().url);
-            }
-            else if (message.mentions.users.size == 1) {
-                makeWobble(await message.mentions.users.first().avatarURL({ format: "png" }));
-            }
-            else if (args.length==1 && validUrl.isUri(args[0])) {
-                makeWobble(args[0]);
-            }
-            else {
-                makeWobble(await message.author.avatarURL({ format: "png" }));
-            }
-        }
-
         function makeWobble(link) {
             fetch(link)
                 .then(res => res.buffer())
@@ -50,7 +32,7 @@ module.exports = {
                             })
                             .then(function (data) {
 
-                                    eyelocate.execute('{"url": ' + '"' + link + '"}', async (res) =>{
+                                    eyelocate.execute('{"url": ' + '"' + link + '"}', async (res) => {
 
                                     if(res==null) return message.channel.send("Could not locate parts of the image! Try using another one.");
 
@@ -69,20 +51,20 @@ module.exports = {
                                         .resize(parseInt(size), parseInt(size))
                                         .toBuffer();
     
-                                    leftP = res[0]; //P -> pupil
-                                    rightP = res[1];
+                                    var leftP = res[0]; //P -> pupil
+                                    var rightP = res[1];
     
                                     const overlay = sharp()
                                         .composite([
                                             {
                                                 input: leftEye,
-                                                blend: 'over',
+                                                blend: "over",
                                                 top: parseInt(leftP.y-size/2),
                                                 left: parseInt(leftP.x-size/2)
                                             },
                                             {
                                                 input: rightEye,
-                                                blend: 'over',
+                                                blend: "over",
                                                 top: parseInt(rightP.y-size/2),
                                                 left: parseInt(rightP.x-size/2),
                                             },
@@ -95,11 +77,11 @@ module.exports = {
                                     var result = intoStream(data1).pipe(overlay);
     
     
-                                    result.once('finish', function () {
+                                    result.once("finish", function () {
                                         message.channel.send("", {
                                             files: [{
                                                 attachment: result,
-                                                name: 'wobble.png'
+                                                name: "wobble.png"
                                             }]
                                         });
                                     });
@@ -112,5 +94,25 @@ module.exports = {
                     }
                 });
         }
+
+
+        if (args.length > 1) {
+            return message.channel.send("Too many parameters! Use --help wobblyeyes for usage instructions!");
+        }
+        else {
+            if (message.attachments.size == 1) {
+                makeWobble(message.attachments.first().url);
+            }
+            else if (message.mentions.users.size == 1) {
+                makeWobble(await message.mentions.users.first().avatarURL({ format: "png" }));
+            }
+            else if (args.length==1 && validUrl.isUri(args[0])) {
+                makeWobble(args[0]);
+            }
+            else {
+                makeWobble(await message.author.avatarURL({ format: "png" }));
+            }
+        }
+
     }
 }

@@ -14,9 +14,9 @@ module.exports = {
                 const random = Math.floor(Math.random() * json.data.children.length);
                 const embed = new Discord.MessageEmbed()
                 .setColor(0x00FF00)
-                .setTitle(json.data.children[random].data.title)
-                .setImage(json.data.children[random].data.url)
-                .addField("Info", "Number of upvotes: " + json.data.children[random].data.ups)
+                .setTitle(json.data.children[parseInt(random)].data.title)
+                .setImage(json.data.children[parseInt(random)].data.url)
+                .addField("Info", "Number of upvotes: " + json.data.children[parseInt(random)].data.ups)
                 .setFooter("Memes provided by r/dogelore")
                 message.channel.send(embed);
             });

@@ -16,27 +16,27 @@ module.exports = {
         .then(json => {
             for(var i = 0;i<json.list.length;i++){
                 if(json.list[i].dt_txt.split(" ")[1]==="09:00:00" || json.list[i].dt_txt.split(" ")[1]==="15:00:00" || json.list[i].dt_txt.split(" ")[1]==="21:00:00"){
-                    if(json.list[i].weather[0].main=="Clear"){
+                    if(json.list[i].weather[0].main === "Clear"){
                         arr.push(returnDay(new Date(json.list[i].dt_txt.split(" ")[0]).getDay()));
                         arr.push(":sunny:");
                     }
-                    else if (json.list[i].weather[0].main=="Clouds"){
+                    else if (json.list[i].weather[0].main ==="Clouds"){
                         arr.push(returnDay(new Date(json.list[i].dt_txt.split(" ")[0]).getDay()));
                         arr.push(":cloud:");
                     }
-                    else if (json.list[i].weather[0].main=="Snow"){
+                    else if (json.list[i].weather[0].main === "Snow"){
                         arr.push(returnDay(new Date(json.list[i].dt_txt.split(" ")[0]).getDay()));
                         arr.push(":cloud_snow:");
                     }
-                    else if (json.list[i].weather[0].main=="Rain"){
+                    else if (json.list[i].weather[0].main ==="Rain"){
                         arr.push(returnDay(new Date(json.list[i].dt_txt.split(" ")[0]).getDay()));
                         arr.push(":cloud_rain:")
                     }
-                    else if (json.list[i].weather[0].main=="Drizzle"){
+                    else if (json.list[i].weather[0].main==="Drizzle"){
                         arr.push(returnDay(new Date(json.list[i].dt_txt.split(" ")[0]).getDay()));
                         arr.push(":cloud_rain:")
                     }
-                    else if (json.list[i].weather[0].main=="Thunderstorm"){
+                    else if (json.list[i].weather[0].main==="Thunderstorm"){
                         arr.push(returnDay(new Date(json.list[i].dt_txt.split(" ")[0]).getDay()));
                         arr.push(":thunder_cloud_rain:")
                     }
@@ -58,22 +58,22 @@ module.exports = {
         }); 
         
         function returnDay(num){
-            if(num==0){
+            if(num===0){
                 return "SUN";
             }
-            else if(num==1){
+            else if(num===1){
                 return "MON"
             }
-            else if(num==2){
+            else if(num===2){
                 return "TUE"
             }
-            else if(num==3){
+            else if(num===3){
                 return "WED"
             }
-            else if(num==4){
+            else if(num===4){
                 return "THU"
             }
-            else if(num==5){
+            else if(num===5){
                 return "FRI"
             }
             else{

@@ -30,7 +30,7 @@ module.exports = {
 
         request.post(options, async (error, response, body) => {
             if (error) {
-                console.log('Error: ', error);
+                console.log(error);
                 return;
             }
             let jsonResponse = JSON.parse(body);
