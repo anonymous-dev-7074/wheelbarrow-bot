@@ -1,5 +1,4 @@
 var figlet = require('figlet');
-const { MessageEmbed } = require("discord.js");
 
 
 module.exports = {
@@ -9,16 +8,20 @@ module.exports = {
     usage: "--asciify <text>",
     async execute(client, message, args) {
         if(args.length === 0){
-            return message.channel.send("You must provide some text!");
-        }
-        
+            return message.channel.send("You must provide some text.");
+        }    
 
-        figlet('Testing', function(err, data) {
+        figlet(args.join(" "), function(err, data) {
             if (err) {
-                message.channel.send("An error occured! Please try again!")
-                return;
+                return message.channel.send("An error occured. Please try again.");
             }
-            message.channel.send(data);
+
+            if(data.length>=2000){
+                message.channel.send("Your message is too long.");
+            }
+            else{
+                message.channel.send('```'+data+'```');
+            }
         });
     }
 }
