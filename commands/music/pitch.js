@@ -4,9 +4,9 @@ module.exports = {
     category: "music",
     description: "Changes the pitch of current song",
     usage: "--pitch <value beween 0.4 and 3>",
-    execute(client, message, args, vars,vars1) {
+    execute(client, message, args,vars) {
 
-        var server = vars1.data.get(message.guild.id);
+        var server = vars.data.get(message.guild.id);
         
         if (!server || !server.player){
             message.channel.send("Nothing to pitch");

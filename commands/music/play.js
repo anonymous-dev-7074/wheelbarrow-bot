@@ -9,8 +9,8 @@ module.exports = {
     category: "music",
     description: "Plays a song.",
     usage: "--play <song name/url>",
-    async execute(client, message, args, vars,vars1) {
-        let server = vars1.data.get(message.guild.id) || {};
+    async execute(client, message, args,vars) {
+        let server = vars.data.get(message.guild.id) || {};
 
         var manager=null;
 
@@ -24,7 +24,7 @@ module.exports = {
                 player: ""
             }
 
-            vars1.data.set(message.guild.id, server);
+            vars.data.set(message.guild.id, server);
         }
 
         if(server.manager==""){
@@ -54,7 +54,7 @@ module.exports = {
 
             server.player=player;
             server.manager=manager;
-            vars1.data.set(message.guild.id, server);
+            vars.data.set(message.guild.id, server);
         }
 
         getSongs(`ytsearch: ${args.join(" ")}`).then(songs => {
@@ -75,7 +75,7 @@ module.exports = {
             }
 
             message.channel.send(`${songs[0].info.title} was added to the queue!`);
-            vars1.data.set(message.guild.id, server);
+            vars.data.set(message.guild.id, server);
             }
         );
 
@@ -109,7 +109,7 @@ module.exports = {
                 // Play next song
 
                 server.queue.shift();
-                vars1.data.set(message.guild.id, server);
+                vars.data.set(message.guild.id, server);
 
                 
                 
@@ -139,7 +139,7 @@ module.exports = {
                     ]);
                     server.manager="";
                     server.player="";
-                    vars1.data.set(message.guild.id, server);
+                    vars.data.set(message.guild.id, server);
                 }
             });
             

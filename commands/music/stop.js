@@ -3,9 +3,9 @@ module.exports = {
     category: "music",
     description: "Stops playing and clears the queue",
     usage: "--stop",
-    execute(client, message, args, vars,vars1) {
+    execute(client, message, args, vars) {
 
-        var server = vars1.data.get(message.guild.id) || {};
+        var server = vars.data.get(message.guild.id) || {};
 
         if (!server || !server.player) {
             message.channel.send("Nothing is in the queue!");
@@ -14,7 +14,7 @@ module.exports = {
             while (server.queue.length > 0) {
                 server.queue.pop();
             }
-            vars1.data.set(message.guild.id,server);
+            vars.data.set(message.guild.id,server);
             server.player.stop();
         }
 

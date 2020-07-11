@@ -5,9 +5,9 @@ module.exports = {
     category: "music",
     description: "Returns server's queue",
     usage: "--queue",
-    execute(client, message, args,vars,vars1) {
+    execute(client, message, args, vars) {
 
-        var server = vars1.data.get(message.guild.id);
+        var server = vars.data.get(message.guild.id);
 
         if (!server || !server.player) {
             message.channel.send("Nothing is in the queue!");

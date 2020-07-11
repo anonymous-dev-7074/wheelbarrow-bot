@@ -4,9 +4,9 @@ module.exports = {
     category: "music",
     description: "Removes song from queue",
     usage: "--remove <position of a song in queue>",
-    execute(client, message, args, vars,vars1) {
+    execute(client, message, args, vars) {
 
-        var server = vars1.data.get(message.guild.id);
+        var server = vars.data.get(message.guild.id);
 
 
         if (args.length > 1 || isNaN(parseInt(args[0]))) {
@@ -26,7 +26,7 @@ module.exports = {
                 else {
                     message.channel.send(`Removed ${server.queue[parseInt(args[0]) - 1].title} from the queue!`);
                     server.queue.splice(parseInt(args[0]) - 1, 1);
-                    vars1.data.set(message.guild.id,server);
+                    vars.data.set(message.guild.id,server);
                 }
             }
         }

@@ -9,7 +9,6 @@ const client = new Client({
 });
 
 const server = new Map();
-const server1 = new Map();
 
 client.commands = new Collection();
 client.aliases = new Collection;
@@ -54,12 +53,8 @@ client.on("message", async message =>{
         data:server
     }
 
-    let vars1 = {
-        data:server1
-    }
-
     if(command) 
-        command.execute(client, message, args,vars,vars1);
+        command.execute(client, message, args,vars);
  
 
 });
