@@ -1,0 +1,10 @@
+Lavalink_old.jar
+.env
+logs/
+npm-debug.log
+Procfile
+system.properties
+application.yml
+build
+fonts
+node_modules
