@@ -2,6 +2,7 @@ const { Manager } = require("@lavacord/discord.js");
 const fetch = require("node-fetch");
 const { URLSearchParams } = require("url");
 const { config } = require("dotenv");
+const stop = require('./stop.js');
 
 module.exports = {
     name: "play",
@@ -14,10 +15,13 @@ module.exports = {
 
         var manager=null;
 
+        var interval;
+
         if (!server.queue) {
             server = {
                 queue: [],
                 idle: false,
+                loop: false,
                 connection: "",
                 timeout: "",
                 manager: "",
@@ -47,14 +51,21 @@ module.exports = {
             });
 
             const player = await manager.join({
-                guild: message.guild.id, // Guild id
-                channel: message.member.voice.channel.id, // Channel id
-                node: "1" // lavalink node id, based on array of nodes
+                guild: message.guild.id, 
+                channel: message.member.voice.channel.id, 
+                node: "1" 
             });
 
             server.player=player;
             server.manager=manager;
             vars.data.set(message.guild.id, server);
+
+            //check if someone is even listening - every 10 minutes
+            interval = setInterval(function(){
+                if(!message.member.voice.channel){
+                    stop.execute(client, message, args, vars);
+                }
+            },600000);
         }
 
         getSongs(`ytsearch: ${args.join(" ")}`).then(songs => {
@@ -64,7 +75,7 @@ module.exports = {
                     title: songs[0].info.title,
                     length: songs[0].info.length
                 })
-                playTest();
+                play();
             }
             else{
                 server.queue.push({
@@ -96,55 +107,34 @@ module.exports = {
         }
 
 
-        async function playTest(){
-
+        async function play(){
             
-            await server.player.play(server.queue[0].track); // Track is a base64 string we get from Lavalink REST API
+            await server.player.play(server.queue[0].track); 
 
             
 
             server.player.once("error", error => console.error(error));
             server.player.once("end", async data => {
-                if (data.reason === "REPLACED") return; // Ignore REPLACED reason to prevent skip loops
-                // Play next song
+                if (data.reason === "REPLACED") return;
 
-                server.queue.shift();
-                vars.data.set(message.guild.id, server);
+                if(!server.loop){
+                    server.queue.shift();
+                    vars.data.set(message.guild.id, server);
+                }
 
-                
-                
                 if(server.queue[0]){    
-                    playTest();
+                    play();
                 }
                 else{
                     await server.manager.leave(message.guild.id);
-                    server.player.pitch(1.0);
-                    server.player.speed(1.0);
-                    server.player.equalizer([
-                        {band:0,gain:0},
-                        {band:1,gain:0},
-                        {band:2,gain:0},
-                        {band:3,gain:0},
-                        {band:4,gain:0},
-                        {band:5,gain:0},
-                        {band:6,gain:0},
-                        {band:7,gain:0},
-                        {band:8,gain:0},
-                        {band:9,gain:0},
-                        {band:10,gain:0},
-                        {band:11,gain:0},
-                        {band:12,gain:0},
-                        {band:13,gain:0},
-                        {band:14,gain:0},
-                    ]);
-                    server.manager="";
-                    server.player="";
+                    server.loop = false;
+                    server.manager = "";
+                    server.player = "";
+                    message.channel.send("Stoping the playback. Goodbye!");
+                    clearInterval(interval);
                     vars.data.set(message.guild.id, server);
                 }
             });
-            
-            // Leave voice channel and destory Player
-             // Player ID aka guild id
         }
     }
 }
