@@ -58,14 +58,15 @@ module.exports = {
 
             server.player=player;
             server.manager=manager;
-            vars.data.set(message.guild.id, server);
 
             //check if someone is even listening - every 10 minutes
-            interval = setInterval(function(){
+            server.timeout = setInterval(function(){
                 if(!message.member.voice.channel){
                     stop.execute(client, message, args, vars);
                 }
             },600000);
+
+            vars.data.set(message.guild.id, server);
         }
 
         getSongs(`ytsearch: ${args.join(" ")}`).then(songs => {
@@ -127,11 +128,11 @@ module.exports = {
                 }
                 else{
                     await server.manager.leave(message.guild.id);
+                    clearInterval(server.timeout);
                     server.loop = false;
                     server.manager = "";
                     server.player = "";
                     message.channel.send("Stoping the playback. Goodbye!");
-                    clearInterval(interval);
                     vars.data.set(message.guild.id, server);
                 }
             });
