@@ -18,4 +18,11 @@ Wheelbarrow is a general purpose Discord bot written in JavaScript using [Discor
 
 ## Installation
 
-* **TO-DO**
+* [Here](https://github.com/casko1/Lavalink) is my forked repository of Lavalink that includes filter features. Configuration instructions can be found [here](https://github.com/casko1/Lavalink#server-configuration). You need to run seperate server for Lavalink in order to use music features. More information can be found on their [github page](https://github.com/Frederikam/Lavalink).
+
+* Besides the required modules there needs to be .env file with the following keys set
+
+* TOKEN (your discord bot token)
+* WTOKEN (openweathermap.org token)
+* subscriptionKey (Microsoft azure facial recognition service token)
+* lavalinkpassword (which you need to set accordingly in application.yml file)
