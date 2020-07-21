@@ -71,7 +71,7 @@ module.exports = {
 
         getSongs(`ytsearch: ${args.join(" ")}`).then(songs => {
             if(!songs[0]){
-                return message.channel.send("An error occurred while searcing that song. Please try again.");
+                return message.channel.send("An error occurred while searching that song. Please try again.");
             }
             else{
                 if(!server.queue[0]){

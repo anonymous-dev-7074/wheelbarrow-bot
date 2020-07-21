@@ -10,7 +10,7 @@ module.exports = {
             }
             else{
                 if(isNaN(args[0])){
-                    return message.channel.send("You must input a timestamp.");
+                    return message.channel.send("You must include position in seconds.");
                 }
                 else{
                     server.player.seek(parseInt(args[0])*1000);
