@@ -70,20 +70,25 @@ module.exports = {
         }
 
         getSongs(`ytsearch: ${args.join(" ")}`).then(songs => {
-            if(!server.queue[0]){
-                server.queue.push({
-                    track: songs[0].track,
-                    title: songs[0].info.title,
-                    length: songs[0].info.length
-                })
-                play();
+            if(!songs[0]){
+                return message.channel.send("An error occurred while searcing that song. Please try again.");
             }
             else{
-                server.queue.push({
-                    track: songs[0].track,
-                    title: songs[0].info.title,
-                    length: songs[0].info.length
-                })
+                if(!server.queue[0]){
+                    server.queue.push({
+                        track: songs[0].track,
+                        title: songs[0].info.title,
+                        length: songs[0].info.length
+                    })
+                    play();
+                }
+                else{
+                    server.queue.push({
+                        track: songs[0].track,
+                        title: songs[0].info.title,
+                        length: songs[0].info.length
+                    })
+                }
             }
 
             message.channel.send(`${songs[0].info.title} was added to the queue!`);
