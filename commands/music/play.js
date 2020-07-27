@@ -137,7 +137,7 @@ module.exports = {
                     server.loop = false;
                     server.manager = "";
                     server.player = "";
-                    message.channel.send("Stoping the playback. Goodbye!");
+                    message.channel.send("Stopping the playback. Goodbye!");
                     vars.data.set(message.guild.id, server);
                 }
             });
