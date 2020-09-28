@@ -15,8 +15,6 @@ module.exports = {
 
         var manager=null;
 
-        var interval;
-
         if (!server.queue) {
             server = {
                 queue: [],
@@ -44,20 +42,14 @@ module.exports = {
     
             
             await manager.connect();
-    
+            
             
             manager.on("error", (error, node) => {
                 console.log(error);
             });
 
-            const player = await manager.join({
-                guild: message.guild.id, 
-                channel: message.member.voice.channel.id, 
-                node: "1" 
-            });
-
-            server.player=player;
             server.manager=manager;
+
 
             //check if someone is even listening - every 10 minutes
             server.timeout = setInterval(function(){
@@ -69,16 +61,27 @@ module.exports = {
             vars.data.set(message.guild.id, server);
         }
 
-        getSongs(`ytsearch: ${args.join(" ")}`).then(songs => {
+        getSongs(`ytsearch: ${args.join(" ")}`).then(async songs => {
             if(!songs[0]){
                 return message.channel.send("An error occurred while searching that song. Please try again.");
             }
             else{
+                const player = await server.manager.join({
+                    guild: message.guild.id, 
+                    channel: message.member.voice.channel.id, 
+                    node: "1" 
+                });
+    
+                server.player=player;
+
+                vars.data.set(message.guild.id, server);
+
                 if(!server.queue[0]){
                     server.queue.push({
                         track: songs[0].track,
                         title: songs[0].info.title,
-                        length: songs[0].info.length
+                        length: songs[0].info.length,
+                        requester: message.author
                     })
                     play();
                 }
@@ -86,7 +89,8 @@ module.exports = {
                     server.queue.push({
                         track: songs[0].track,
                         title: songs[0].info.title,
-                        length: songs[0].info.length
+                        length: songs[0].info.length,
+                        requester: message.author
                     })
                 }
             }
