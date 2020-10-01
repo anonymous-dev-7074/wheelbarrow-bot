@@ -11,10 +11,9 @@ module.exports = {
                 message.channel.send(`Nothing is playing right now.`);
             }
             else{
-                const embed = new MessageEmbed()
+                const embed = server.queue[0].message
                 .setColor(0x00FF00)
-                .setDescription(`Current song is ${server.queue[0].title}
-                                Currently at ${millisToMinutesAndSeconds(server.player.returnTime())} of ${millisToMinutesAndSeconds(server.queue[0].length)}
+                .setDescription(`Currently at ${millisToMinutesAndSeconds(server.player.returnTime())} of ${millisToMinutesAndSeconds(server.queue[0].length)}
                                 ${slider(server.player.returnTime(),server.queue[0].length)}
                                 Requested by: ${server.queue[0].requester}`);
     
