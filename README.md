@@ -26,3 +26,5 @@ Wheelbarrow is a general purpose Discord bot written in JavaScript using [Discor
 * WTOKEN (openweathermap.org token)
 * subscriptionKey (Microsoft azure facial recognition service token)
 * lavalinkpassword (which you need to set accordingly in application.yml file)
+* CLIENTTOKEN (Spotify API client token) -> for cover images
+* CLIENTSECRET (Spotify API client secret) -> for cover images
